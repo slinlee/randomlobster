@@ -9,7 +9,6 @@
         margin: 0;
         padding: 0;
         height: 100%;
-        width: 100%;
         display: flex;
         flex-direction: column;
       }
@@ -45,14 +44,10 @@
     <script>
       let posts = [];
 
+      // Load static archive
       async function loadPosts() {
-        const url =
-          "https://overopinionatedframebuilder.blogspot.com/feeds/posts/default?alt=json&max-results=500";
-        const res = await fetch(url);
-        const data = await res.json();
-        posts = data.feed.entry.map(
-          (e) => e.link.find((l) => l.rel === "alternate").href,
-        );
+        const res = await fetch("posts.json");
+        posts = await res.json();
       }
 
       function randomPost() {
@@ -65,7 +60,7 @@
         .getElementById("randomBtn")
         .addEventListener("click", randomPost);
 
-      // Load posts on startup
+      // Initialize
       loadPosts().then(randomPost);
     </script>
   </body>
